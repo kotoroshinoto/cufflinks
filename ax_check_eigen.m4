@@ -50,11 +50,11 @@ succeeded=no
 
 dnl first we check the system location for eigen libraries
 if test "$ac_eigen_path" != ""; then
-EIGEN_CPPFLAGS="-I$ac_eigen_path/include"
+EIGEN_CPPFLAGS="-I$ac_eigen_path"
 else
 for ac_eigen_path_tmp in /usr /usr/local /opt /opt/local ; do
 if test -d "$ac_eigen_path_tmp/include/eigen" && test -r "$ac_eigen_path_tmp/include/eigen"; then
-EIGEN_CPPFLAGS="-I$ac_eigen_path_tmp/include"
+EIGEN_CPPFLAGS="-I$ac_eigen_path_tmp"
 break;
 fi
 done

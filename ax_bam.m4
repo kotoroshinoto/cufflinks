@@ -69,7 +69,7 @@ if test "x$want_bam" = "xyes"; then
 #		bam_lib_version_req_sub_minor="0"
 #    	fi
 #	WANT_BAM_VERSION=`expr $bam_lib_version_req_major \* 100000 \+  $bam_lib_version_req_minor \* 100 \+ $bam_lib_version_req_sub_minor`
-	AC_MSG_CHECKING(for bamlib)
+	AC_MSG_CHECKING(for bamlib >= $bam_lib_version_req)
 	succeeded=no
 
 	dnl first we check the system location for bam libraries
