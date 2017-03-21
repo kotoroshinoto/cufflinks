@@ -15,7 +15,7 @@ set(HTSLIB_SEARCH_DIRS
         )
 
 set(_htslib_ver_path "htslib-${htslib_FIND_VERSION}")
-include(LibFindMacros)
+include(LibFindMacros.cmake)
 
 # Dependencies
 libfind_package(HTSlib ZLIB)
