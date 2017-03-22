@@ -44,5 +44,5 @@ set(HTSlib_PROCESS_INCLUDES HTSlib_INCLUDE_DIR)
 set(HTSlib_PROCESS_LIBS HTSlib_LIBRARY)
 libfind_process(HTSlib)
 
-message(STATUS "   HTSlib include dirs: ${HTSlib_INCLUDE_DIRS}")
-message(STATUS "   HTSlib libraries: ${HTSlib_LIBRARIES}")
+message(STATUS "HTSlib include dirs: ${HTSlib_INCLUDE_DIRS}")
+message(STATUS "HTSlib libraries: ${HTSlib_LIBRARIES}")

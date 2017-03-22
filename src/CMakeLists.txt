@@ -178,68 +178,64 @@ add_library(libcufflinks OBJECT ${libcufflinks_SOURCES})
 #cuffcompare_SOURCES = cuffcompare.cpp
 #cuffcompare_LDADD = libgc.a
 add_executable(cuffcompare cuffcompare.cpp $<TARGET_OBJECTS:libgc>)
-target_compile_options(cuffcompare ${OpenMP_CXX_FLAGS})
 
 #gffread_SOURCES = gffread.cpp
 #gffread_LDADD = libgc.a
 add_executable(gffread gffread.cpp $<TARGET_OBJECTS:libgc>)
-target_compile_options(gffread ${OpenMP_CXX_FLAGS})
 
 #cufflinks_SOURCES = cufflinks.cpp
 #cufflinks_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB)  $(BOOST_SERIALIZATION_LIB)  $(BAM_LIB)
 #cufflinks_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS) #$(ZLIB_LDFLAGS)
 add_executable(cufflinks cufflinks.cpp $<TARGET_OBJECTS:libcufflinks> $<TARGET_OBJECTS:libgc>)
 target_link_libraries(cufflinks ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-target_compile_options(cufflinks ${OpenMP_CXX_FLAGS})
 
 #cuffdiff_SOURCES = cuffdiff.cpp
 #cuffdiff_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #cuffdiff_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(cuffdiff cuffdiff.cpp)
 target_link_libraries(cuffdiff ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-target_compile_options(cuffdiff ${OpenMP_CXX_FLAGS})
 
 #gtf_to_sam_SOURCES = gtf_to_sam.cpp
 #gtf_to_sam_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #gtf_to_sam_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(gtf_to_sam gtf_to_sam.cpp)
 target_link_libraries(gtf_to_sam ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-target_compile_options(gtf_to_sam ${OpenMP_CXX_FLAGS})
+
 
 #compress_gtf_SOURCES = compress_gtf.cpp
 #compress_gtf_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #compress_gtf_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(compress_gtf compress_gtf.cpp)
 target_link_libraries(compress_gtf ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-target_compile_options(compress_gtf ${OpenMP_CXX_FLAGS})
+
 
 #cuffquant_SOURCES = cuffquant.cpp
 #cuffquant_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #cuffquant_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(cuffquant cuffquant.cpp)
 target_link_libraries(cuffquant ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-target_compile_options(cuffquant ${OpenMP_CXX_FLAGS})
+
 
 #cuffnorm_SOURCES = cuffnorm.cpp
 #cuffnorm_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #cuffnorm_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(cuffnorm cuffnorm.cpp)
 target_link_libraries(cuffnorm ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-target_compile_options(cuffnorm ${OpenMP_CXX_FLAGS})
+
 
 ##cuffcluster_SOURCES = cuffcluster.cpp
 ##cuffcluster_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 ##cuffcluster_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 #add_executable(cuffcluster cuffcluster.cpp)
 #target_link_libraries(cuffcluster ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-#target_compile_options(cuffcluster ${OpenMP_CXX_FLAGS})
+
 
 ##gtf_reads_SOURCES = gtf_reads.cpp
 ##gtf_reads_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 ##gtf_reads_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS) #$(ZLIB_LDFLAGS)
 #add_executable(gtf_reads gtf_reads.cpp)
 #target_link_libraries(gtf_reads ${Boost_LIBRARIES} ${BAM_LIBRARIES})
-#target_compile_options(gtf_reads ${OpenMP_CXX_FLAGS})
+
 
 #TODO register this cuffmerge script to be installed
 #-- scripts to be installed in $prefix/bin

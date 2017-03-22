@@ -17,8 +17,9 @@ find_package(HTSlib REQUIRED)
 #CMAKE_REQUIRED_LIBRARIES = list of libraries to link
 include(cufflinks_feature_checks)
 #these flags were set in the configure.ac file
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -Wall -Wno-strict-aliasing -g -gdwarf-2 -Wunused -Wuninitialized -ftemplate-depth-1024)
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -Wall -Wno-strict-aliasing -g -gdwarf-2 -Wunused -Wuninitialized -ftemplate-depth-1024)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-strict-aliasing -g -gdwarf-2 -Wunused -Wuninitialized -ftemplate-depth-1024 ${OpenMP_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS}")
+
 set(ext_CFLAGS "")
 set(debug_CFLAGS "")
 include(cufflinks_options)

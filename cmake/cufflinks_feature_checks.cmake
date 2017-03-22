@@ -4,11 +4,11 @@ include( CheckIncludeFile )
 include( CheckFunctionExists )
 include( CheckLibraryExists )
 include( CheckSymbolExists )
-include( CheckIncludeFile )
+include( CheckCXXSymbolExists )
 include( CheckIncludeFiles )
-include( CheckSymbolExists )
 include( CheckCSourceCompiles )
 include( CheckTypeSize )
+include( CheckStructHasMember )
 
 
 #TODO determine if following Autoconf commands are needed for cmake build to behave the same as autotools build, and implement something equivalent
@@ -80,10 +80,17 @@ endif()
 ## check the platform
 #AC_CANONICAL_HOST
 ## Checks for structures/functions that can be used to determine system memory
+
 #AC_CHECK_MEMBERS([struct sysinfo.totalram], [], [], [#include <sys/sysinfo.h>])
+CHECK_STRUCT_HAS_MEMBER("struct sysinfo" totalram sys/sysinfo.h HAVE_SYSINFO_TOTALRAM LANGUAGE CXX)
+if(NOT HAVE_SYSINFO_TOTALRAM)
+    message(FATAL_ERROR "struct sysinfo does not have member TOTALRAM")
+endif()
+
 #AC_CHECK_DECLS([sysctl, CTL_HW, HW_PHYSMEM], [], [], [#include <sys/sysctl.h>])
-
-
+CHECK_CXX_SYMBOL_EXISTS(sysctl "sys/sysctl.h" HAVE_DECL_SYSCTL)
+CHECK_CXX_SYMBOL_EXISTS(CTL_HW "sys/sysctl.h" HAVE_DECL_CTL_HW)
+CHECK_CXX_SYMBOL_EXISTS(HW_PHYSMEM "sys/sysctl.h" HAVE_DECL_PHYSMEM)
 #TODO check if 64 bit compiling is available and use it if you can
 #echo "${host_cpu}-${host_os}"
 #case "${host_cpu}-${host_os}" in
