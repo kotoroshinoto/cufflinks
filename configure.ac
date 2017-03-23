@@ -1,10 +1,10 @@
-m4_include([ax_boost_base.m4])
-m4_include([ax_boost_thread.m4])
-m4_include([ax_boost_system.m4])
-m4_include([ax_boost_serialization.m4])
-m4_include([ax_bam.m4])
-m4_include([ax_check_zlib.m4])
-m4_include([ax_check_eigen.m4])
+#m4_include([ax_boost_base.m4])
+#m4_include([ax_boost_thread.m4])
+#m4_include([ax_boost_system.m4])
+#m4_include([ax_boost_serialization.m4])
+#m4_include([ax_bam.m4])
+#m4_include([ax_check_zlib.m4])
+#m4_include([ax_check_eigen.m4])
 
 define([svnversion], esyscmd([sh -c "svnversion|tr -d '\n'"]))dnl
 AC_INIT([cufflinks], [2.2.1], [cole@cs.umd.edu])
@@ -13,6 +13,7 @@ AC_DEFINE(SVN_REVISION, "svnversion", [SVN Revision])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE
 
 #AM_PATH_CPPUNIT(1.10.2)
