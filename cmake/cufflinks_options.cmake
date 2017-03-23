@@ -12,7 +12,7 @@ option(DEBUG "enable debugging info (default is no)" OFF)
 #        [enable debugging info (default is no)])],
 #        [], [enable_debug=no])
 
-#TODO
+#TODO optimize numbers
 option(OPTIM "set optimization level (default is 3)" OFF)
 if(OPTIM)
     if(NOT DEFINED OLEVEL)

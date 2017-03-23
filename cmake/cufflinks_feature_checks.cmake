@@ -26,20 +26,32 @@ CHECK_INCLUDE_FILE_CXX("stdlib.h" HAVE_STDLIB_H)
 if(NOT HAVE_STDLIB_H)
     message(FATAL_ERROR "stdlib.h required")
 endif()
+add_definitions(-DHAVE_STDLIB_H=1)
+
 CHECK_INCLUDE_FILE_CXX("string.h" HAVE_STRING_H)
 if(NOT HAVE_STRING_H)
     message(FATAL_ERROR "string.h required")
 endif()
+add_definitions(-DHAVE_STRING_H=1)
+
+CHECK_INCLUDE_FILE_CXX("strings.h" HAVE_STRINGS_H)
+if(HAVE_STRINGS_H)
+    add_definitions(-DHAVE_STRINGS_H=1)
+endif()
+
 CHECK_INCLUDE_FILE_CXX("unistd.h" HAVE_UNISTD_H)
 if(NOT HAVE_UNISTD_H)
     message(FATAL_ERROR "unistd.h required")
 endif()
+add_definitions(-DHAVE_UNISTD_H=1)
+
 ## Checks for typedefs, structures, and compiler characteristics.
 #AC_HEADER_STDBOOL
 CHECK_INCLUDE_FILE_CXX("stdbool.h" HAVE_STDBOOL_H)
 if(NOT HAVE_STDBOOL_H)
     message(FATAL_ERROR "stdbool.h required")
 endif()
+add_definitions(-DHAVE_STDBOOL_H=1)
 #TODO if it also has to conform to C99, this will require more checking
 #AC_C_INLINE
 include(check_c_inline)
@@ -67,6 +79,7 @@ CHECK_TYPE_SIZE("ptrdiff_t" PTRDIFF_T)
 if(NOT DEFINED HAVE_PTRDIFF_T)
     message(FATAL_ERROR "ptr_diff_t not available")
 endif()
+add_definitions(-DHAVE_PTRDIFF_T)
 ## Checks for library functions.
 ##AC_FUNC_FORK
 CHECK_FUNCTION_EXISTS(fork HAVE_FORK)
@@ -113,6 +126,7 @@ CHECK_STRUCT_HAS_MEMBER("struct sysinfo" totalram sys/sysinfo.h HAVE_SYSINFO_TOT
 if(NOT HAVE_SYSINFO_TOTALRAM)
     message(FATAL_ERROR "struct sysinfo does not have member TOTALRAM")
 endif()
+add_definitions(-DHAVE_SYSINFO_TOTALRAM=1)
 
 #AC_CHECK_DECLS([sysctl, CTL_HW, HW_PHYSMEM], [], [], [#include <sys/sysctl.h>])
 CHECK_CXX_SYMBOL_EXISTS(sysctl "sys/sysctl.h" HAVE_DECL_SYSCTL)

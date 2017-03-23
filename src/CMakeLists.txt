@@ -1,4 +1,4 @@
-include_directories(BEFORE SYSTEM ${EIGEN3_INCLUDE_DIR})
+include_directories(BEFORE SYSTEM ${Cufflinks_REQ_INCLUDES})
 
 set(noinst_HEADERS
     update_check.h
@@ -162,7 +162,8 @@ multireads.cpp
 jensen_shannon.cpp 
 tracking.cpp )
 
-add_library(libcufflinks OBJECT ${libcufflinks_SOURCES})
+add_library(cufflinks_lib STATIC ${libcufflinks_SOURCES})
+set_target_properties(cufflinks_lib PROPERTIES OUTPUT_NAME cufflinks.a)
 
 set(libgc_SOURCES
 codons.cpp 
@@ -176,69 +177,74 @@ gff.cpp
 gff_utils.cpp 
 gtf_tracking.cpp)
 
-add_library(libgc OBJECT ${libgc_SOURCES})
+add_library(gc STATIC ${libgc_SOURCES})
 
+set(Cufflinks_REQ_LIBS ${Cufflinks_REQ_LIBS} gc)
 
 #cuffcompare_SOURCES = cuffcompare.cpp
 #cuffcompare_LDADD = libgc.a
-add_executable(cuffcompare cuffcompare.cpp $<TARGET_OBJECTS:libgc>)
+add_executable(cuffcompare cuffcompare.cpp)
+target_link_libraries(cuffcompare gc)
 
 #gffread_SOURCES = gffread.cpp
 #gffread_LDADD = libgc.a
-add_executable(gffread gffread.cpp $<TARGET_OBJECTS:libgc>)
+add_executable(gffread gffread.cpp)
+target_link_libraries(gffread gc)
+
+set(Cufflinks_REQ_LIBS ${Cufflinks_REQ_LIBS} cufflinks_lib)
 
 #cufflinks_SOURCES = cufflinks.cpp
 #cufflinks_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB)  $(BOOST_SERIALIZATION_LIB)  $(BAM_LIB)
 #cufflinks_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS) #$(ZLIB_LDFLAGS)
-add_executable(cufflinks cufflinks.cpp $<TARGET_OBJECTS:libcufflinks> $<TARGET_OBJECTS:libgc>)
-target_link_libraries(cufflinks ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+add_executable(cufflinks cufflinks.cpp)
+target_link_libraries(cufflinks ${Cufflinks_REQ_LIBS})
 
 #cuffdiff_SOURCES = cuffdiff.cpp
 #cuffdiff_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #cuffdiff_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(cuffdiff cuffdiff.cpp)
-target_link_libraries(cuffdiff ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+target_link_libraries(cuffdiff ${Cufflinks_REQ_LIBS})
 
 #gtf_to_sam_SOURCES = gtf_to_sam.cpp
 #gtf_to_sam_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #gtf_to_sam_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(gtf_to_sam gtf_to_sam.cpp)
-target_link_libraries(gtf_to_sam ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+target_link_libraries(gtf_to_sam ${Cufflinks_REQ_LIBS})
 
 
 #compress_gtf_SOURCES = compress_gtf.cpp
 #compress_gtf_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #compress_gtf_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(compress_gtf compress_gtf.cpp)
-target_link_libraries(compress_gtf ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+target_link_libraries(compress_gtf ${Cufflinks_REQ_LIBS})
 
 
 #cuffquant_SOURCES = cuffquant.cpp
 #cuffquant_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #cuffquant_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(cuffquant cuffquant.cpp)
-target_link_libraries(cuffquant ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+target_link_libraries(cuffquant ${Cufflinks_REQ_LIBS})
 
 
 #cuffnorm_SOURCES = cuffnorm.cpp
 #cuffnorm_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 #cuffnorm_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 add_executable(cuffnorm cuffnorm.cpp)
-target_link_libraries(cuffnorm ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+target_link_libraries(cuffnorm ${Cufflinks_REQ_LIBS})
 
 
 ##cuffcluster_SOURCES = cuffcluster.cpp
 ##cuffcluster_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 ##cuffcluster_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS)
 #add_executable(cuffcluster cuffcluster.cpp)
-#target_link_libraries(cuffcluster ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+#target_link_libraries(cuffcluster ${Cufflinks_REQ_LIBS})
 
 
 ##gtf_reads_SOURCES = gtf_reads.cpp
 ##gtf_reads_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB) $(BOOST_SERIALIZATION_LIB) $(BAM_LIB)
 ##gtf_reads_LDFLAGS =  $(LDFLAGS) $(BOOST_LDFLAGS) $(BAM_LDFLAGS) #$(ZLIB_LDFLAGS)
 #add_executable(gtf_reads gtf_reads.cpp)
-#target_link_libraries(gtf_reads ${Boost_LIBRARIES} ${BAM_LIBRARIES})
+#target_link_libraries(gtf_reads ${Cufflinks_REQ_LIBS})
 
 
 #TODO register this cuffmerge script to be installed
