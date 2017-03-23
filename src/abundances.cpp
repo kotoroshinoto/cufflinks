@@ -3132,7 +3132,7 @@ bool AbundanceGroup::calculate_gammas(const vector<MateHit>& nr_alignments,
 	
 	vector<double> gammas;
 	
-	verbose_msg( "Calculating intial MLE\n");
+	verbose_msg( "Calculating initial MLE\n");
 	
 	AbundanceStatus mle_success = gamma_mle(mapped_transcripts,
                                                   nr_alignments,
@@ -3812,7 +3812,7 @@ void Mstep (int N,
 	double m = 0;
     
 	v = U.rowwise().sum();
-    m = v.colwise().sum()(0);
+    m = v.colwise().sum()(0,0);
     
 	if (m)
 	{

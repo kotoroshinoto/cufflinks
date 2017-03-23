@@ -410,7 +410,7 @@ double (*f)();
     INT i;
     if (l==NULL) 
     {
-        ERROR(("vvec1 recieved NULL variable\n"));  
+        ERROR(("vvec1 received NULL variable\n"));
         return NULL;
     }
     v = createvar("_vvec1",STHIDDEN,l->n,VDOUBLE);

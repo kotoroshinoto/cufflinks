@@ -66,7 +66,7 @@ INT fp;
   if (quote) name[n-2] = '"';
 
 /*
- * If we are writing, check the file is writeable and that the
+ * If we are writing, check the file is writable and that the
  * LFData directory exists.
  */
   if ((mode[0]=='w') | (mode[0]=='a'))
@@ -78,7 +78,7 @@ INT fp;
         }
       }
       if (access("LFData",W_OK)==-1)
-      { ERROR(("LFData directory not writeable"));
+      { ERROR(("LFData directory not writable"));
         return(0);
       }
     }
