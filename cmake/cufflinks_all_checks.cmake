@@ -1,8 +1,11 @@
 include(cufflinks_dependencies)
 include(cufflinks_feature_checks)
 
-set(Cufflinks_REQ_INCLUDES ${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${Samtools_INCLUDE_DIRS})
-set(Cufflinks_REQ_LIBS ${Boost_LIBRARIES} ${BAM_LIBRARIES} ${Boost_REQUESTED_LIBRARIES} ${ZLIB_LIBRARIES} ${Samtools_LIBRARIES})
+set(Cufflinks_REQ_INCLUDES ${EIGEN3_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${Samtools_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS})
+set(Cufflinks_REQ_LIBS ${Boost_LIBRARIES} ${Boost_REQUESTED_LIBRARIES} ${BAM_LIBRARIES} ${Samtools_LIBRARIES} ${ZLIB_LIBRARIES})
+
+message(STATUS "Using includes: ${Cufflinks_REQ_INCLUDES}")
+message(STATUS "Using libraries: ${Cufflinks_REQ_LIBS}")
 
 #these flags were set in the configure.ac file
 set(CUSTOM_CFLAGS "-Wall -Wno-strict-aliasing -g -gdwarf-2 -Wunused -Wuninitialized -ftemplate-depth-1024  -m64 -O3  -DNDEBUG  -pthread")
@@ -24,6 +27,9 @@ include(cufflinks_options)
 #LDFLAGS="${ext_LDFLAGS} ${user_LDFLAGS}"
 include(cufflinks_package_setup)
 
-CONFIGURE_FILE(cmakeconfig.h.in config.h)
+CONFIGURE_FILE(cmakeconfig.h.in ${PROJECT_BINARY_DIR}/config.h)
 add_definitions(-DHAVE_CONFIG_H)
+include_directories(BEFORE PUBLIC ${Cufflinks_REQ_INCLUDES})
+include_directories(${PROJECT_BINARY_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/src)

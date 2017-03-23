@@ -1,93 +1,17 @@
-include_directories(BEFORE SYSTEM ${Cufflinks_REQ_INCLUDES})
+set(libgc_SOURCES
+        codons.cpp
+        GArgs.cpp
+        GBase.cpp
+        gdna.cpp
+        GStr.cpp
+        GFaSeqGet.cpp
+        GFastaIndex.cpp
+        gff.cpp
+        gff_utils.cpp
+        gtf_tracking.cpp)
 
-set(noinst_HEADERS
-    update_check.h
-    biascorrection.h
-    codons.h
-    clustering.h
-    differential.h
-    GArgs.h
-    GBase.h
-    gdna.h
-    GFaSeqGet.h
-    GFastaIndex.h
-    gff.h
-    GHash.hh
-    GVec.hh
-    GList.hh
-    GStr.h
-    assemble.h
-    bundles.h
-    filters.h
-    hits.h
-    tokenize.h
-    scaffolds.h
-    abundances.h
-    genes.h
-    transitive_closure.h
-    transitive_reduction.h
-    gff_utils.h
-    gtf_tracking.h
-    progressbar.h
-    bundles.h
-    scaffold_graph.h
-    matching_merge.h
-    graph_optimize.h
-    jensen_shannon.h
-    sampling.h
-    lemon/maps.h
-    lemon/bin_heap.h
-    lemon/fib_heap.h
-    lemon/bipartite_matching.h
-    lemon/topology.h
-    lemon/bucket_heap.h
-    lemon/smart_graph.h
-    lemon/list_graph.h
-    lemon/error.h
-    lemon/graph_utils.h
-    lemon/bfs.h
-    lemon/dfs.h
-    lemon/math.h
-    lemon/tolerance.h
-    lemon/graph_adaptor.h
-    lemon/concept_check.h
-    lemon/bits/default_map.h
-    lemon/bits/array_map.h
-    lemon/bits/vector_map.h
-    lemon/bits/debug_map.h
-    lemon/bits/map_extender.h
-    lemon/bits/base_extender.h
-    lemon/bits/graph_adaptor_extender.h
-    lemon/bits/graph_extender.h
-    lemon/bits/invalid.h
-    lemon/bits/path_dump.h
-    lemon/bits/traits.h
-    lemon/bits/utility.h
-    lemon/bits/alteration_notifier.h
-    lemon/bits/variant.h
-    lemon/concepts/graph.h
-    lemon/concepts/bpugraph.h
-    lemon/concepts/graph_components.h
-    lemon/concepts/ugraph.h
-    lemon/concepts/heap.h
-    lemon/concepts/maps.h
-    lemon/concepts/path.h
-    lemon/concepts/matrix_maps.h
-    locfit/design.h
-    locfit/lfcons.h
-    locfit/lfstruc.h
-    locfit/local.h
-    locfit/imatlb.h
-    locfit/lffuns.h
-    locfit/lfwin.h
-    locfit/mutil.h
-    locfit/vari.hpp
-    replicates.h
-    multireads.h
-    rounding.h
-    negative_binomial_distribution.h
-    tracking.h
-    common.h)
+add_library(libgc STATIC ${libgc_SOURCES})
+set_target_properties(libgc PROPERTIES OUTPUT_NAME gc)
 
 set(libcufflinks_SOURCES
 clustering.cpp 
@@ -162,36 +86,21 @@ multireads.cpp
 jensen_shannon.cpp 
 tracking.cpp )
 
-add_library(cufflinks_lib STATIC ${libcufflinks_SOURCES})
-set_target_properties(cufflinks_lib PROPERTIES OUTPUT_NAME cufflinks.a)
-
-set(libgc_SOURCES
-codons.cpp 
-GArgs.cpp 
-GBase.cpp 
-gdna.cpp 
-GStr.cpp 
-GFaSeqGet.cpp 
-GFastaIndex.cpp 
-gff.cpp 
-gff_utils.cpp 
-gtf_tracking.cpp)
-
-add_library(gc STATIC ${libgc_SOURCES})
-
-set(Cufflinks_REQ_LIBS ${Cufflinks_REQ_LIBS} gc)
+add_library(libcufflinks STATIC ${libcufflinks_SOURCES})
+set_target_properties(libcufflinks PROPERTIES OUTPUT_NAME cufflinks)
+target_link_libraries(libcufflinks ${Cufflinks_REQ_LIBS})
 
 #cuffcompare_SOURCES = cuffcompare.cpp
 #cuffcompare_LDADD = libgc.a
 add_executable(cuffcompare cuffcompare.cpp)
-target_link_libraries(cuffcompare gc)
+target_link_libraries(cuffcompare libgc)
 
 #gffread_SOURCES = gffread.cpp
 #gffread_LDADD = libgc.a
 add_executable(gffread gffread.cpp)
-target_link_libraries(gffread gc)
+target_link_libraries(gffread libgc)
 
-set(Cufflinks_REQ_LIBS ${Cufflinks_REQ_LIBS} cufflinks_lib)
+set(Cufflinks_REQ_LIBS ${Cufflinks_REQ_LIBS} libcufflinks libgc)
 
 #cufflinks_SOURCES = cufflinks.cpp
 #cufflinks_LDADD = libcufflinks.a libgc.a $(BOOST_THREAD_LIB) $(BOOST_SYSTEM_LIB)  $(BOOST_SERIALIZATION_LIB)  $(BAM_LIB)
@@ -251,3 +160,21 @@ target_link_libraries(cuffnorm ${Cufflinks_REQ_LIBS})
 #-- scripts to be installed in $prefix/bin
 #dist_bin_SCRIPTS = \
 #cuffmerge
+
+install(TARGETS cuffcompare
+        cuffdiff
+        cufflinks
+        cuffnorm
+        cuffquant
+        gffread
+        gtf_to_sam
+        RUNTIME DESTINATION bin
+        )
+install(FILES
+        AUTHORS
+        LICENSE
+        README
+        DESTINATION bin)
+install(PROGRAMS
+        cuffmerge
+        DESTINATION bin)
