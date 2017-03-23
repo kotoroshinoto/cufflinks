@@ -170,11 +170,6 @@ install(TARGETS cuffcompare
         gtf_to_sam
         RUNTIME DESTINATION bin
         )
-install(FILES
-        AUTHORS
-        LICENSE
-        README
-        DESTINATION bin)
 install(PROGRAMS
         cuffmerge
         DESTINATION bin)
