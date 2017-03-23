@@ -115,7 +115,7 @@ LDFLAGS="${ext_LDFLAGS} ${user_LDFLAGS}"
 AC_CHECK_MEMBERS([struct sysinfo.totalram], [], [], [#include <sys/sysinfo.h>])
 AC_CHECK_DECLS([sysctl, CTL_HW, HW_PHYSMEM], [], [], [#include <sys/sysctl.h>])
 
-AM_INIT_AUTOMAKE([-Wall tar-pax foreign])
+AM_INIT_AUTOMAKE([-Wall tar-pax foreign subdir-objects])
 
 AC_CONFIG_FILES([Makefile				 
 				 src/Makefile])

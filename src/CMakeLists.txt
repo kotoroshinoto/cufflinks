@@ -1,3 +1,5 @@
+include_directories(BEFORE SYSTEM ${EIGEN3_INCLUDE_DIR})
+
 set(noinst_HEADERS
     update_check.h
     biascorrection.h
@@ -160,7 +162,9 @@ multireads.cpp
 jensen_shannon.cpp 
 tracking.cpp )
 
-set(libgc_SOURCES = 
+add_library(libcufflinks OBJECT ${libcufflinks_SOURCES})
+
+set(libgc_SOURCES
 codons.cpp 
 GArgs.cpp 
 GBase.cpp 
@@ -173,7 +177,7 @@ gff_utils.cpp
 gtf_tracking.cpp)
 
 add_library(libgc OBJECT ${libgc_SOURCES})
-add_library(libcufflinks OBJECT ${libcufflinks_SOURCES})
+
 
 #cuffcompare_SOURCES = cuffcompare.cpp
 #cuffcompare_LDADD = libgc.a

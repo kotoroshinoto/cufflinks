@@ -16,6 +16,6 @@ submodule_init ( ) {
     done
 }
 
-./version.sh
-submodule_init
+#./version.sh
+#submodule_init
 autoreconf --install

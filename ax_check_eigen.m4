@@ -52,9 +52,9 @@ dnl first we check the system location for eigen libraries
 if test "$ac_eigen_path" != ""; then
 EIGEN_CPPFLAGS="-I$ac_eigen_path"
 else
-for ac_eigen_path_tmp in /usr /usr/local /opt /opt/local ; do
-if test -d "$ac_eigen_path_tmp/include/eigen" && test -r "$ac_eigen_path_tmp/include/eigen"; then
-EIGEN_CPPFLAGS="-I$ac_eigen_path_tmp"
+for ac_eigen_path_tmp in [/usr /usr/local /opt /opt/local] ; do
+if test -d "$ac_eigen_path_tmp/include/eigen3" && test -r "$ac_eigen_path_tmp/include/eigen3"; then
+EIGEN_CPPFLAGS="-I$ac_eigen_path_tmp/include/eigen3"
 break;
 fi
 done
@@ -85,6 +85,8 @@ export EIGEN_CPPFLAGS
 if test "$succeeded" == "yes" ; then
 AC_SUBST(EIGEN_CPPFLAGS)
 AC_DEFINE(HAVE_EIGEN,,[define if the EIGEN library is available])
+else
+AC_MSG_RESULT(no)
 fi
 
 CPPFLAGS="$CPPFLAGS_SAVED"

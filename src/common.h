@@ -14,9 +14,15 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #else
+#ifndef PACKAGE_VERSION
 #define PACKAGE_VERSION "INTERNAL"
+#endif
+#ifndef SVN_REVISION
 #define SVN_REVISION "XXX"
+#endif
+#ifndef BOOST_VERSION
 #define BOOST_VERSION 104700
+#endif
 #endif
 
 #include <stdint.h>
