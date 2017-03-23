@@ -31,4 +31,7 @@ include(cufflinks_options)
 #user_LDFLAGS="$LDFLAGS"
 #LDFLAGS="${ext_LDFLAGS} ${user_LDFLAGS}"
 include(cufflinks_package_setup)
+
+CONFIGURE_FILE(cmakeconfig.h.in config.h)
+
 add_subdirectory(src)
