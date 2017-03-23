@@ -1,0 +1,116 @@
+/* config.h.  Generated from config.h.in by cmake.  */
+/* cmakeconfig.h.in manually generated for cmake based on the config.h.in.  Generated from configure.ac by autoheader.  */
+
+/* define if the BAM library is available */
+#cmakedefine HAVE_BAM
+
+/* define if the Boost library is available */
+#cmakedefine HAVE_BOOST
+
+/* define if the Boost::Serialization library is available */
+#cmakedefine HAVE_BOOST_SERIALIZATION
+
+/* define if the Boost::System library is available */
+#cmakedefine HAVE_BOOST_SYSTEM
+
+/* define if the Boost::Thread library is available */
+#cmakedefine HAVE_BOOST_THREAD
+
+/* Define to 1 if you have the declaration of `CTL_HW', and to 0 if you don't.
+   */
+#cmakedefine01 HAVE_DECL_CTL_HW
+
+/* Define to 1 if you have the declaration of `HW_PHYSMEM', and to 0 if you
+   don't. */
+#cmakedefine01 HAVE_DECL_HW_PHYSMEM
+
+/* Define to 1 if you have the declaration of `sysctl', and to 0 if you don't.
+   */
+#cmakedefine01 HAVE_DECL_SYSCTL 1
+
+/* define if the EIGEN library is available */
+#cmakedefine HAVE_EIGEN
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#cmakedefine HAVE_INTTYPES_H 1
+
+/* Define to 1 if you have the `z' library (-lz). */
+#cmakedefine HAVE_LIBZ 1
+
+/* Define to 1 if you have the <memory.h> header file. */
+#cmakedefine HAVE_MEMORY_H 1
+
+/* Define to 1 if the system has the type `ptrdiff_t'. */
+#cmakedefine HAVE_PTRDIFF_T 1
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#cmakedefine HAVE_STDBOOL_H 1
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#cmakedefine HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#cmakedefine HAVE_STDLIB_H 1
+
+/* Define to 1 if you have the <strings.h> header file. */
+#cmakedefine HAVE_STRINGS_H 1
+
+/* Define to 1 if you have the <string.h> header file. */
+#cmakedefine HAVE_STRING_H 1
+
+/* Define to 1 if `totalram' is a member of `struct sysinfo'. */
+#cmakedefine HAVE_STRUCT_SYSINFO_TOTALRAM 1
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#cmakedefine HAVE_SYS_STAT_H 1
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine HAVE_SYS_TYPES_H 1
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine HAVE_UNISTD_H 1
+
+/* Define to 1 if the system has the type `_Bool'. */
+#cmakedefine HAVE__BOOL 1
+
+/* Name of package */
+#cmakedefine PACKAGE "@PACKAGE@"
+
+/* Define to the address where bug reports for this package should be sent. */
+#cmakedefine PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
+
+/* Define to the full name of this package. */
+#cmakedefine PACKAGE_NAME "@PACKAGE_NAME@"
+
+/* Define to the full name and version of this package. */
+#cmakedefine PACKAGE_STRING "@PACKAGE_STRING@"
+
+/* Define to the one symbol short name of this package. */
+#cmakedefine PACKAGE_TARNAME "@PACKAGE_TARNAME@"
+
+/* Define to the home page for this package. */
+#cmakedefine PACKAGE_URL "@PACKAGE_URL@"
+
+/* Define to the version of this package. */
+#cmakedefine PACKAGE_VERSION "@PACKAGE_VERSION@"
+
+/* Define to 1 if you have the ANSI C header files. */
+#cmakedefine STDC_HEADERS 1
+
+/* SVN Revision */
+#cmakedefine SVN_REVISION "@SVN_REVISION@"
+
+/* Version number of package */
+#cmakedefine VERSION "@VERSION@"
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#cmakedefine inline @INLINE_STRING@
+#endif
+
+/* Define to `int' if <sys/types.h> does not define. */
+#cmakedefine pid_t @PID_T_STRING@
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#cmakedefine size_t @SIZE_T_STRING@

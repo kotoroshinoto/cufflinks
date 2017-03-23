@@ -1,5 +1,4 @@
 # Check for platform specific features and generate config.h
-
 include( CheckIncludeFile )
 include( CheckFunctionExists )
 include( CheckLibraryExists )
@@ -10,6 +9,7 @@ include( CheckCSourceCompiles )
 include( CheckTypeSize )
 include( CheckStructHasMember )
 
+include(ac_header_stdc)
 
 #TODO determine if following Autoconf commands are needed for cmake build to behave the same as autotools build, and implement something equivalent
 #AC_PROG_AWK
@@ -23,63 +23,44 @@ find_program(INSTALL_BINARY install)
 ## Checks for header files.
 #AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
 CHECK_INCLUDE_FILE_CXX("stdlib.h" HAVE_STDLIB_H)
-if(NOT HAVE_STDLIB_H)
-    message(FATAL_ERROR "stdlib.h required")
-endif()
-add_definitions(-DHAVE_STDLIB_H=1)
-
 CHECK_INCLUDE_FILE_CXX("string.h" HAVE_STRING_H)
-if(NOT HAVE_STRING_H)
-    message(FATAL_ERROR "string.h required")
-endif()
-add_definitions(-DHAVE_STRING_H=1)
-
 CHECK_INCLUDE_FILE_CXX("strings.h" HAVE_STRINGS_H)
-if(HAVE_STRINGS_H)
-    add_definitions(-DHAVE_STRINGS_H=1)
-endif()
-
 CHECK_INCLUDE_FILE_CXX("unistd.h" HAVE_UNISTD_H)
-if(NOT HAVE_UNISTD_H)
-    message(FATAL_ERROR "unistd.h required")
-endif()
-add_definitions(-DHAVE_UNISTD_H=1)
-
+CHECK_INCLUDE_FILE_CXX("inttypes.h" HAVE_INTTYPES_H)
+CHECK_INCLUDE_FILE_CXX("memory.h" HAVE_MEMORY_H)
+CHECK_INCLUDE_FILE_CXX("sys/stat.h" HAVE_SYS_STAT_H)
 ## Checks for typedefs, structures, and compiler characteristics.
 #AC_HEADER_STDBOOL
 CHECK_INCLUDE_FILE_CXX("stdbool.h" HAVE_STDBOOL_H)
-if(NOT HAVE_STDBOOL_H)
-    message(FATAL_ERROR "stdbool.h required")
-endif()
-add_definitions(-DHAVE_STDBOOL_H=1)
+CHECK_TYPE_SIZE("bool" BOOL_T)
+CHECK_TYPE_SIZE("_Bool" _BOOL)
 #TODO if it also has to conform to C99, this will require more checking
 #AC_C_INLINE
 include(check_c_inline)
 CHECK_C_INLINE()
 #TODO define inline to the inline string for preprocessor
-if(NOT HAVE_INLINE)
-    message(FATAL_ERROR "inline keyword not available")
+if(HAVE_INLINE)
+    if(NOT INLINE_STRING STREQUAL "inline")
+        set(inline ${INLINE_STRING})
+    endif()
+    message(STATUS "INLINE symbol: ${INLINE_STRING}")
+else()
+    message(STATUS "INLINE symbol not available")
 endif()
-message(STATUS "INLINE symbol: ${INLINE_STRING}")
-add_definitions(-Dinline=${INLINE_STRING})
 #TODO this originally is supposed to set inline to mean nothing, and to assign the preprocessor def to replace "inline" with the correct string
 #TODO right now i'm just requiring that it exists
 #AC_TYPE_PID_T
 CHECK_TYPE_SIZE("pid_t" PID_T)
 if(NOT DEFINED HAVE_PID_T)
-    message(FATAL_ERROR "pid_t not available")
+    set(PID_T_STRING int)
 endif()
 #AC_TYPE_SIZE_T
 CHECK_TYPE_SIZE("size_t" SIZE_T)
 if(NOT DEFINED HAVE_SIZE_T)
-    message(FATAL_ERROR "size_t not available")
+    set(SIZE_T_STRING unsigned int)
 endif()
 #AC_CHECK_TYPES([ptrdiff_t])
 CHECK_TYPE_SIZE("ptrdiff_t" PTRDIFF_T)
-if(NOT DEFINED HAVE_PTRDIFF_T)
-    message(FATAL_ERROR "ptr_diff_t not available")
-endif()
-add_definitions(-DHAVE_PTRDIFF_T)
 ## Checks for library functions.
 ##AC_FUNC_FORK
 CHECK_FUNCTION_EXISTS(fork HAVE_FORK)
@@ -87,21 +68,20 @@ check_include_file(vfork.h HAVE_VFORK_H)
 CHECK_FUNCTION_EXISTS(vfork HAVE_V_FORK)
 if(HAVE_VFORK_H)
     message(STATUS "vfork header file found")
-    add_definitions(-DHAVE_VFORK_H)
 else()
     message(STATUS "vfork header file not found")
 endif()
 if(HAVE_FORK)
     #TODO try to run fork, see if it is just a stub
     message(STATUS "working fork found")
-    add_definitions(-DHAVE_WORKING_FORK)
+    set(HAVE_WORKING_FORK ${HAVE_FORK})
 else()
     message(STATUS "working fork not found")
 endif()
 if(HAVE_V_FORK)
     #TODO try to run vfork, see if it is just a stub
     message(STATUS "found working vfork")
-    add_definitions(-DHAVE_WORKING_VFORK)
+    set(HAVE_WORKING_VFORK ${HAVE_V_FORK})
 endif()
 if(HAVE_FORK AND (NOT HAVE_V_FORK))
     message(STATUS "using fork for vfork")
@@ -110,7 +90,6 @@ if(HAVE_FORK AND (NOT HAVE_V_FORK))
 else()
     message(STATUS "no need to override vfork")
 endif()
-
 if((NOT HAVE_FORK) AND (NOT HAVE_V_FORK))
     message(FATAL_ERROR "working fork command required")
 endif()
@@ -122,37 +101,12 @@ endif()
 
 ## Checks for structures/functions that can be used to determine system memory
 #AC_CHECK_MEMBERS([struct sysinfo.totalram], [], [], [#include <sys/sysinfo.h>])
-CHECK_STRUCT_HAS_MEMBER("struct sysinfo" totalram sys/sysinfo.h HAVE_SYSINFO_TOTALRAM LANGUAGE CXX)
-if(NOT HAVE_SYSINFO_TOTALRAM)
-    message(FATAL_ERROR "struct sysinfo does not have member TOTALRAM")
-endif()
-add_definitions(-DHAVE_SYSINFO_TOTALRAM=1)
-
+CHECK_STRUCT_HAS_MEMBER("struct sysinfo" totalram sys/sysinfo.h HAVE_STRUCT_SYSINFO_TOTALRAM LANGUAGE CXX)
 #AC_CHECK_DECLS([sysctl, CTL_HW, HW_PHYSMEM], [], [], [#include <sys/sysctl.h>])
 CHECK_CXX_SYMBOL_EXISTS(sysctl "sys/sysctl.h" HAVE_DECL_SYSCTL)
-if(HAVE_DECL_SYSCTL)
-    message(STATUS "declaration for sysctl found")
-    add_definitions(-DHAVE_DECL_SYSCTL=1)
-else()
-    message(STATUS "declaration for sysctl not found")
-    add_definitions(-DHAVE_DECL_SYSCTL=0)
-endif()
 CHECK_CXX_SYMBOL_EXISTS(CTL_HW "sys/sysctl.h" HAVE_DECL_CTL_HW)
-if(HAVE_DECL_CTL_HW)
-    message(STATUS "declaration for CTL_HW found")
-    add_definitions(-DHAVE_DECL_CTL_HW=1)
-else()
-    message(STATUS "declaration for CTL_HW not found")
-    add_definitions(-DHAVE_DECL_CTL_HW=0)
-endif()
 CHECK_CXX_SYMBOL_EXISTS(HW_PHYSMEM "sys/sysctl.h" HAVE_DECL_PHYSMEM)
-if(HAVE_DECL_PHYSMEM)
-    message(STATUS "declaration for HW_PHYSMEM found")
-    add_definitions(-DHAVE_DECL_PHYSMEM=1)
-else()
-    message(STATUS "declaration for HW_PHYSMEM not found")
-    add_definitions(-DHAVE_DECL_PHYSMEM=0)
-endif()
+
 #TODO check if 64 bit compiling is available and use it if you can
 #echo "${host_cpu}-${host_os}"
 #case "${host_cpu}-${host_os}" in
