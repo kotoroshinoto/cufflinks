@@ -90,9 +90,6 @@ if(HAVE_FORK AND (NOT HAVE_V_FORK))
 else()
     message(STATUS "no need to override vfork")
 endif()
-if((NOT HAVE_FORK) AND (NOT HAVE_V_FORK))
-    message(FATAL_ERROR "working fork command required")
-endif()
 ##AC_CHECK_FUNCS([floor memmove pow regcomp sqrt strchr strcspn strspn strstr])
 #TODO check that these functions exist
 
