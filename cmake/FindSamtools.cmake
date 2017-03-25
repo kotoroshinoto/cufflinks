@@ -27,7 +27,7 @@ find_path(Samtools_INCLUDE_DIR
         include/samtools
         HINTS ENV SAMTOOLS_ROOT
         )
-
+get_filename_component(Samtools_INCLUDE_DIR ${Samtools_INCLUDE_DIR} DIRECTORY)
 # Finally the library itself
 find_library(Samtools_LIBRARY
         NAMES bam libbam.a bam.a
